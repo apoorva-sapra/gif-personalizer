@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="document">
+    <button type="submit">Upload file</button>
+  </form>
+  {% if url %}
+    <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+  {% endif %} -->
+
+<div class="card col-10 row justify-content-center frame">
+  <div class="card-body col-9">
+    <div class="title ">
+      <h1>Personalize your GIF</h1>
+    </div>
+
+    <div class="card">
+      <form action="/external/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        Enter name of the sender:
+        <input class=container-fluid type="text" name="param" required><br><br>
+
+        <!-- <div class="dropzone">
+        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+        <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" class="upload-input" required>
+      </div> -->
+
+        <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" class="input-btn" required>
+        <br>
+        <input type="submit" class=" btn" value="Create GIF">
+
+      </form>
+    </div>
+  </div>
+
+  {% if raw_url or edit_url %}
+  <div class="card-body col-9">
+      Your Personalised GIF is ready!:
+      <p><a class="btn" style="color:black;" href="{{ edit_url }}">Preview</a></p>
+      <div class ="img">
+      <img src={{edit_url}} height=100 width=100>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+
+
+<!-- <form action="/external/" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  Enter name of the sender:
+  <input type="text" name="param" required><br><br>
+  <br>
+  <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" required>
+  <br><br>
+  <input type="submit" value="Create GIF">
+</form> -->
+<!-- if url of video both exist then only showing created gif later on we can remove raw url if it of no use -->
+<!-- {% if raw_url or edit_url %}
+<span>
+  Your Personalised GIF is ready!:
+  {{edit_url}}
+  <p>Uploaded file: <a href="{{ edit_url }}">{{ edit_url }}</a></p>
+  <img src={{edit_url}} height=100 width=100>
+</span> -->
+
+{% endif %}
+{% endblock %}

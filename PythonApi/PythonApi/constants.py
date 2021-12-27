@@ -1,0 +1,1 @@
+BACKGROUND_IMAGE= 'background3.jpg'
