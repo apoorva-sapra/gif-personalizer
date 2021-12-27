@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'gif-personalizer'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4A55505F78E04FD69721955DD1665874 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_42EEA94EC5E54A0BA87E63FE0C4D6959 }}
