@@ -1,11 +1,8 @@
 import os
-import re
-from typing import Pattern
-import requests
 from django.shortcuts import render
 import sys
 from subprocess import run,PIPE
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import default_storage as fs
 from django.views.generic import TemplateView
 
 class Home(TemplateView):
@@ -20,11 +17,9 @@ def external(request):
     # print("INP---------->",name)
     video=request.FILES['video']
     # print("video is ------>",video)
-    fs=FileSystemStorage()
     filename=fs.save(video.name,video)
     fileurl=fs.open(filename)
     templateurl=fs.url(filename)
-    # print("file raw url",filename)
     # print("file full url", fileurl)
     # print("template url",templateurl)
     # out= run([sys.executable,'D://apoorva//vidgif//OutlookAddIn//API//test.py',name],shell=False,stdout=PIPE)

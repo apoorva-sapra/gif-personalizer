@@ -5,7 +5,6 @@ import glob
 import os, sys
 import shutil
 import PySimpleGUI as sg
-from django.core.files.storage import FileSystemStorage as fs
 from PIL import Image
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
