@@ -10,17 +10,16 @@
     <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
   {% endif %} -->
 
-<div class="card col-10 row justify-content-center frame">
-  <div class="card-body col-9">
-    <div class="title ">
-      <h1>Personalize your GIF</h1>
-    </div>
+<div class="card col-12 row justify-content-center frame">
+  <div class="card-body col-10">
+      <h1 class="title">Personalize your GIF</h1>
 
     <div class="card">
       <form action="/external/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <br>
         Enter name of the sender:
-        <input class=container-fluid type="text" name="param" required><br><br>
+        <input class="container-fluid" type="text" name="param" required><br><br>
 
         <!-- <div class="dropzone">
         <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
@@ -35,11 +34,13 @@
     </div>
   </div>
 
+  
+
   {% if raw_url or edit_url %}
   <div class="card-body col-9">
-      Your Personalised GIF is ready!:
-      <p><a class="btn" style="color:black;" href="{{ edit_url }}">Preview</a></p>
-      <div class ="img">
+    Your Personalised GIF is ready!:
+    <p><a class="btn" style="color:black;" href="{{ edit_url }}">Preview</a></p>
+    <div class="img">
       <img src={{edit_url}} height=100 width=100>
     </div>
   </div>
