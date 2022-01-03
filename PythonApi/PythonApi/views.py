@@ -12,23 +12,22 @@ def button(request):
     return render(request,'home.html')
 
 def external(request):
-    # print("REQUEST-------->",request)
     name= request.POST.get('param')
-    # print("INP---------->",name)
     video=request.FILES['video']
-    # print("video is ------>",video)
     filename=fs.save(video.name,video)
     fileurl=fs.open(filename)
     templateurl=fs.url(filename)
-    # print("file full url", fileurl)
-    # print("template url",templateurl)
-    # out= run([sys.executable,'D://apoorva//vidgif//OutlookAddIn//API//test.py',name],shell=False,stdout=PIPE)
-    gif= run([sys.executable,'D://apoorva//vidgif//OutlookAddIn//API//AddImageAndTextInAllFrames.py',str(fileurl),str(filename),name],shell=False,stdout=PIPE)
+
+    GIF_CREATOR_FILE="\\AddImageAndTextInAllFrames.py"
+    os.chdir('../')
+    rootPath=os.getcwd()
+    os.chdir('PythonApi')
+    gifCreatorFilePath=rootPath+GIF_CREATOR_FILE
+
+    gif= run([sys.executable,gifCreatorFilePath,str(fileurl),str(filename),name],shell=False,stdout=PIPE)
     
     # out.stdout=out.stdout.strip().decode( "utf-8" )
     gif.stdout=gif.stdout.strip().decode( "utf-8" )
-    # print("OUT  ------------>   ",out)
-    # print("gif STDOUT     ------------>   ",gif.stdout)
     
     # print("\n\n\n", os.path.basename(gif.stdout))
     gif_name=os.path.basename(gif.stdout)
