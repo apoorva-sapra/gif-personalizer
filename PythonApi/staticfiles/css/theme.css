@@ -19,12 +19,7 @@
 }
 
 .card{
-  margin-left: 1%;
-  margin-right: 1%;
   height: auto;
-  border:0;
-  box-shadow: 4px 4px 4px 0 #E4DDF0;
-
 }
 
 .card-body{
@@ -100,12 +95,12 @@ h1 {
 }
 
 .container-fluid{
-  border-color: purple;
+  color: #927099;
   padding-left: 0.5%;
   display: block;
-  color: purple;
   background: linear-gradient(to top right, #E4DDF0 0%, #FFFFF3 100%);
-  border-radius: 3px;
+  border:1px solid purple;
+
 }
 
 .input-btn {
