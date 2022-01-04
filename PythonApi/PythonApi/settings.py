@@ -15,9 +15,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -28,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SECURE_FRAME_DENY               = False
 
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+MEDIA_LOCATION = "media"
+
+AZURE_ACCOUNT_NAME = "gifpersonalizerstorage"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
