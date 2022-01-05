@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render
 import sys
 from subprocess import run,PIPE
-from django.core.files.storage import default_storage as fs
+from django.core.files.storage import default_storage as ds
 from django.views.generic import TemplateView
 
 class Home(TemplateView):
@@ -14,9 +14,12 @@ def button(request):
 def external(request):
     name= request.POST.get('param')
     video=request.FILES['video']
-    filename=fs.save(video.name,video)
-    fileurl=fs.open(filename)
-    templateurl=fs.url(filename)
+    filename=ds.save(video.name,video)
+    fileurl=ds.open(filename)
+    templateurl=ds.url(filename)
+
+    print("video saved")
+    print("fileurl",fileurl)
 
     GIF_CREATOR_FILE="\\AddImageAndTextInAllFrames.py"
     os.chdir('../')
@@ -31,6 +34,6 @@ def external(request):
     
     # print("\n\n\n", os.path.basename(gif.stdout))
     gif_name=os.path.basename(gif.stdout)
-    gif_url=fs.url(gif_name)
+    gif_url=ds.url(gif_name)
     # print("\n gif url => ", gif_url)
     return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url})
