@@ -1,5 +1,4 @@
 azure.storage.blob
-azure
 azure.core
 backend
 Django==3.2.9
