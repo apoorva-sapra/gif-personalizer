@@ -54,7 +54,7 @@ azure-mgmt-network==2.7.0
 azure-mgmt-notificationhubs==2.1.0
 azure-mgmt-nspkg==3.0.2
 azure-mgmt-storage==2.0.0
-azure-storage-blob==1.5.0
+azure-storage-blob==12.9.0
 azure-storage-common==1.4.2
 azure-storage-file==1.4.0
 azure-storage-queue==1.4.0
