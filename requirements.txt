@@ -1,6 +1,6 @@
+azure.storage==0.20.0
 azure
 azure.core
-azure.storage
 backend
 Django==3.2.9
 django-extensions==3.1.5
