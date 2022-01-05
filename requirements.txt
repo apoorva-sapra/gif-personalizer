@@ -1,5 +1,5 @@
-azure.storage.blob
-azure.core
+azure-storage-blob
+azure-core
 backend
 Django==3.2.9
 django-extensions==3.1.5
