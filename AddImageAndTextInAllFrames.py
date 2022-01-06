@@ -82,7 +82,6 @@ def main():
     gif_name="temp.gif"
     gif_save_path = video_fullpath.replace(video_name, gif_name)
     ConvertVideoToJpgFrames(video_fullpath)
-    print("\n\n",gif_save_path)
     make_gif(gif_save_path,reciever_name)
     return gif_save_path
 
