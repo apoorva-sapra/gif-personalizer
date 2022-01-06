@@ -23,12 +23,17 @@ def external(request):
     
     #changing \\ to / for correct path route on azure
     GIF_CREATOR_FILE="/AddImageAndTextInAllFrames.py"
-    currentPath=os.getcwd()
+    
+    currentfiles=os.listdir()
+    
     os.chdir('../')
     rootPath=os.getcwd()
+    rootfiles=os.listdir()
+    
     os.chdir('PythonApi')
-    gifCreatorFilePath=currentPath+GIF_CREATOR_FILE
-
+    
+    gifCreatorFilePath=rootPath+GIF_CREATOR_FILE
+    
     gif= run([sys.executable,gifCreatorFilePath,str(fileurl),str(filename),name],shell=False,stdout=PIPE)
     
     # out.stdout=out.stdout.strip().decode( "utf-8" )
