@@ -20,8 +20,9 @@ def external(request):
 
     print("video saved")
     print("fileurl",fileurl)
-
-    GIF_CREATOR_FILE="\\AddImageAndTextInAllFrames.py"
+    
+    #changing \\ to / for correct path route on azure
+    GIF_CREATOR_FILE="/AddImageAndTextInAllFrames.py"
     os.chdir('../')
     rootPath=os.getcwd()
     os.chdir('PythonApi')
