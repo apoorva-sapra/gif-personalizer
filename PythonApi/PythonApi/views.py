@@ -1,8 +1,9 @@
 import os
 from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
+import sys
+from subprocess import run,PIPE
+from django.core.files.storage import default_storage as ds
 from django.views.generic import TemplateView
-from . import CreateGif
 
 class Home(TemplateView):
     template_name = 'home.html'
@@ -13,14 +14,33 @@ def button(request):
 def external(request):
     name= request.POST.get('param')
     video=request.FILES['video']
-    fs=FileSystemStorage()
-    filename=fs.save(video.name,video)
-    fileurl=fs.open(filename)
-    templateurl=fs.url(filename)
- 
-    gifSavePath= CreateGif.createGif(str(fileurl),str(filename),name)
+    filename=ds.save(video.name,video)
+    fileurl=ds.open(filename)
+    templateurl=ds.url(filename)
 
-    gif_name=os.path.basename(gifSavePath)
-
-    gif_url=fs.url(gif_name)
+    print("video saved")
+    print("fileurl",fileurl)
+    
+    #changing \\ to / for correct path route on azure
+    GIF_CREATOR_FILE="/AddImageAndTextInAllFrames.py"
+    
+    currentfiles=os.listdir()
+    
+    os.chdir('../')
+    rootPath=os.getcwd()
+    rootfiles=os.listdir()
+    
+    os.chdir('PythonApi')
+    
+    gifCreatorFilePath=rootPath+GIF_CREATOR_FILE
+    
+    gif= run([sys.executable,gifCreatorFilePath,str(fileurl),str(filename),name],shell=False,stdout=PIPE)
+    
+    # out.stdout=out.stdout.strip().decode( "utf-8" )
+    gif.stdout=gif.stdout.strip().decode( "utf-8" )
+    
+    # print("\n\n\n", os.path.basename(gif.stdout))
+    gif_name=os.path.basename(gif.stdout)
+    gif_url=ds.url(gif_name)
+    # print("\n gif url => ", gif_url)
     return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url})
