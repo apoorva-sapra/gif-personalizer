@@ -5,6 +5,7 @@ import glob
 import os, sys
 import shutil
 import PySimpleGUI as sg
+from django.core.files.storage import FileSystemStorage as fs
 from PIL import Image
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
@@ -73,19 +74,16 @@ def make_gif(gif_path, reciever_name, frame_folder="output"):
                    loop=0)
 
 
-def main():
-    video_fullpath = sys.argv[1]
-    video_name = sys.argv[2]
-    reciever_name=sys.argv[3]
+def createGif(fileUrl,fileName,recieverName):
+    video_fullpath = fileUrl
+    video_name = fileName
+    reciever_name=recieverName
     # img = Image.open(str(video_fullpath))
     # print("img-------->",img)
     gif_name="temp.gif"
     gif_save_path = video_fullpath.replace(video_name, gif_name)
     ConvertVideoToJpgFrames(video_fullpath)
+    print("\n\n",gif_save_path)
     make_gif(gif_save_path,reciever_name)
     return gif_save_path
 
-
-if __name__ == "__main__":
-    gif_save_path=main()
-    print(gif_save_path)
