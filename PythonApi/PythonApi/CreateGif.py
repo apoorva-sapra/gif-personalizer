@@ -1,10 +1,11 @@
 from PIL import Image, ImageDraw, ImageFont
+from PySimpleGUI.PySimpleGUI import Multiline
 import cv2
 import glob
-import os
+import os, sys
 import shutil
 import PySimpleGUI as sg
-from django.core.files.storage import default_storage as ds
+from django.core.files.storage import FileSystemStorage as fs
 from PIL import Image
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
