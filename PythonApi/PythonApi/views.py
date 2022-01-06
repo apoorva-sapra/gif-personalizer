@@ -34,7 +34,7 @@ def external(request):
     
     gifCreatorFilePath=rootPath+GIF_CREATOR_FILE
     
-    gif= run([sys.executable,gifCreatorFilePath,str(fileurl),str(filename),name],shell=False,stdout=PIPE)
+    gif= run([sys.executable,gifCreatorFilePath,str(fileurl),str(filename),name],shell=False, capture_output=True, stdout=PIPE)
     
     # out.stdout=out.stdout.strip().decode( "utf-8" )
     gif.stdout=gif.stdout.strip().decode( "utf-8" )
