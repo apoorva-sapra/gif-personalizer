@@ -1,6 +1,7 @@
 azure-storage-blob
 azure-core
 backend
+opencv-python
 Django==3.2.9
 django-extensions==3.1.5
 django-crispy-forms
@@ -12,7 +13,6 @@ Jinja2==3.0.3
 moviepy==1.0.3
 numpy==1.19.3
 oauthlib==3.1.1
-opencv-python==4.5.3.56
 Pillow==8.3.2
 pyparsing==2.4.7
 PySimpleGUI==4.49.0
