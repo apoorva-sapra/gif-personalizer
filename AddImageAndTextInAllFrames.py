@@ -1,5 +1,4 @@
 from PIL import Image, ImageDraw, ImageFont
-from PySimpleGUI.PySimpleGUI import Multiline
 import cv2
 import glob
 import os, sys
