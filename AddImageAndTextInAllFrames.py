@@ -3,7 +3,6 @@ import cv2
 import glob
 import os, sys
 import shutil
-import PySimpleGUI as sg
 from PIL import Image
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
@@ -46,7 +45,7 @@ def ConvertVideoToJpgFrames(path):
     try:
         os.mkdir("output")
     except IOError:
-        sg.popup("Error occurred creating output folder")
+        print("Error occurred creating output folder")
         return
 
     while still_reading:
