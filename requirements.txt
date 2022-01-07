@@ -2,6 +2,8 @@ azure-storage-blob
 azure-core
 backend
 opencv-python-headless
+Tk
+Tcl
 Django==3.2.9
 django-extensions==3.1.5
 django-crispy-forms
@@ -25,4 +27,3 @@ storage==0.0.4.3
 urllib3==1.26.7
 whitenoise
 gunicorn
-tk
