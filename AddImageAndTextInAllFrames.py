@@ -85,5 +85,5 @@ def main():
 
 
 if __name__ == "__main__":
-    gif_save_path="media/sample3.mp4"
+    gif_save_path = main()
     print(gif_save_path)
