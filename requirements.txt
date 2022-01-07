@@ -25,3 +25,4 @@ storage==0.0.4.3
 urllib3==1.26.7
 whitenoise
 gunicorn
+tk
