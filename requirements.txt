@@ -1,7 +1,7 @@
 azure-storage-blob
 azure-core
 backend
-opencv-python
+opencv-contrib-python-headless
 Django==3.2.9
 django-extensions==3.1.5
 django-crispy-forms
