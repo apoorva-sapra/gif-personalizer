@@ -2,7 +2,8 @@ azure-storage-blob
 azure-core
 backend
 opencv-python-headless
-python-tk
+tk
+PySimpleGUI
 Django==3.2.9
 django-extensions==3.1.5
 django-crispy-forms
@@ -16,7 +17,6 @@ numpy==1.19.3
 oauthlib==3.1.1
 Pillow==8.3.2
 pyparsing==2.4.7
-PySimpleGUI==4.49.0
 python-dateutil==2.8.2
 PyYAML==6.0
 requests==2.26.0
