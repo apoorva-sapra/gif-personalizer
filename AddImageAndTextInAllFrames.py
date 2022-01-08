@@ -2,6 +2,7 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 import cv2
 import glob
+import numpy as np
 import os, sys
 import shutil
 from PIL import Image
@@ -46,7 +47,8 @@ def ConvertVideoToJpgFramesAndSave(path):
     still_reading, image = video_capture.read()
     frame_count = 0
 
-    data = Image.fromarray(image)
+    image[image != np.array(None)]
+    imageFrame = Image.fromarray(image)
 
     if blob.exists():
         # remove previous GIF frame files
@@ -63,11 +65,11 @@ def ConvertVideoToJpgFramesAndSave(path):
     # image_content_setting = ContentSettings(content_type='')
     while still_reading:
         # blob.upload_blob(f"output/frame_{frame_count:05d}.jpg", image)
-        image_stream = BytesIO()
+        # image_stream = BytesIO()
 
-        cv2.imwrite(image_stream, image)
+        # cv2.imwrite(image_stream, image)
         blob_client = blob_service_client.get_blob_client(container='media', blob=f"output/frame_{frame_count:05d}.jpg")
-        blob_client.upload_blob(data, blob_type="BlockBlob")
+        blob_client.upload_blob(imageFrame, blob_type="BlockBlob")
 
         # filename=ds.save(video.name,image)
         # fileurl=ds.open(filename)
