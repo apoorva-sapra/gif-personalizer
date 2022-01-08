@@ -1,13 +1,9 @@
-from typing import Container
 from PIL import Image, ImageDraw, ImageFont
-from PySimpleGUI.PySimpleGUI import Multiline
 import cv2
 import glob
 import os, sys
 import shutil
-import PySimpleGUI as sg
 from PIL import Image
-import os
 from azure.storage.blob import BlobClient
 from PythonApi.PythonApi import settings
 
