@@ -1,9 +1,17 @@
+from typing import Container
 from PIL import Image, ImageDraw, ImageFont
+from PySimpleGUI.PySimpleGUI import Multiline
 import cv2
 import glob
 import os, sys
 import shutil
+import PySimpleGUI as sg
 from PIL import Image
+import os
+from azure.storage.blob import BlobClient
+from PythonApi.PythonApi import settings
+
+blob = BlobClient.from_connection_string(conn_str=settings.CONNECT_STR, container_name="media", blob_name="output")
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
     image = cv2.imread(gifImagePath, -1)
@@ -35,40 +43,44 @@ def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
 file_types = [("MP4 (*.mp4)", "*.mp4"), ("All files (*.*)", "*.*")]
 
 
-def ConvertVideoToJpgFrames(path):
+def ConvertVideoToJpgFramesAndSave(path):
     video_capture = cv2.VideoCapture(path)
     still_reading, image = video_capture.read()
     frame_count = 0
-    if os.path.exists("output"):
+    if blob.exists():
         # remove previous GIF frame files
-        shutil.rmtree("output")
-    try:
-        os.mkdir("output")
-    except IOError:
-        print("Error occurred creating output folder")
-        return
+        # blob.delete_blob("media","output",snapshot=None)
+        # blob.delete_blob()
+        # shutil.rmtree("output")
+        pass
+    # try:
+    #     os.mkdir("output")
+    # except IOError:
+    #     sg.popup("Error occurred creating output folder")
+    #     return
 
     while still_reading:
-        cv2.imwrite(f"output/frame_{frame_count:05d}.jpg", image)
+        blob.upload_blob(f"output/frame_{frame_count:05d}.jpg", image)
+        # cv2.imwrite(f"output/frame_{frame_count:05d}.jpg", image)
 
         # read next image
         still_reading, image = video_capture.read()
         frame_count += 1
 
 
-def make_gif(gif_path, reciever_name, frame_folder="output"):
-    images = glob.glob(f"{frame_folder}/*.jpg")
-    images.sort()
-    for image in images:
-        AddGraphicAfterObjectDetection(image,reciever_name)
-    frames = [Image.open(image) for image in images]
-    frame_one = frames[0]
-    # gif_path += ".gif"
-    frame_one.save(gif_path,
-                   append_images=frames,
-                   save_all=True,
-                   duration=50,
-                   loop=0)
+# def make_gif(gif_path, reciever_name, frame_folder="output"):
+#     images = glob.glob(f"{frame_folder}/*.jpg")
+#     images.sort()
+#     for image in images:
+#         AddGraphicAfterObjectDetection(image,reciever_name)
+#     frames = [Image.open(image) for image in images]
+#     frame_one = frames[0]
+#     # gif_path += ".gif"
+#     frame_one.save(gif_path,
+#                    append_images=frames,
+#                    save_all=True,
+#                    duration=50,
+#                    loop=0)
 
 
 def main():
@@ -79,11 +91,11 @@ def main():
     # print("img-------->",img)
     gif_name="temp.gif"
     gif_save_path = video_fullpath.replace(video_name, gif_name)
-    ConvertVideoToJpgFrames(video_fullpath)
-    make_gif(gif_save_path,reciever_name)
+    ConvertVideoToJpgFramesAndSave(video_fullpath)
+    # make_gif(gif_save_path,reciever_name)
     return gif_save_path
 
 
 if __name__ == "__main__":
-    gif_save_path = main()
+    gif_save_path=main()
     print(gif_save_path)

@@ -57,7 +57,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'PythonApi/PythonApi.wsgi.application'
+WSGI_APPLICATION = 'PythonApi.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -134,3 +134,5 @@ AZURE_MEDIA_CONTAINER = os.environ.get('AZURE_MEDIA_CONTAINER', 'media')
 # AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.azureedge.net'  # CDN URL
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'  # Files URL
 MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}/'
+
+CONNECT_STR = os.getenv('AZURE_STORAGE_CONNECTION_STRING','DefaultEndpointsProtocol=https;AccountName=gifpersonalizerstorage;AccountKey=RoKTD57T2Nodutp2R6yrvk5v8qkUqCI4NeVxS/t3GU8wY/MCO5a8LUCrdgApzX6twRzV2xDAcR1n9FQ7T1FU2g==;EndpointSuffix=core.windows.net')
