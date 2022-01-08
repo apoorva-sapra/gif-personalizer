@@ -45,7 +45,9 @@ def ConvertVideoToJpgFramesAndSave(path):
     video_capture = cv2.VideoCapture(path)
     still_reading, image = video_capture.read()
     frame_count = 0
-    
+
+    data = Image.fromarray(image)
+
     if blob.exists():
         # remove previous GIF frame files
         # blob.delete_blob("media","output",snapshot=None)
@@ -65,7 +67,7 @@ def ConvertVideoToJpgFramesAndSave(path):
 
         cv2.imwrite(image_stream, image)
         blob_client = blob_service_client.get_blob_client(container='media', blob=f"output/frame_{frame_count:05d}.jpg")
-        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
+        blob_client.upload_blob(data, blob_type="BlockBlob")
 
         # filename=ds.save(video.name,image)
         # fileurl=ds.open(filename)
