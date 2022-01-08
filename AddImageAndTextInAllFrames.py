@@ -4,10 +4,13 @@ import glob
 import os, sys
 import shutil
 from PIL import Image
-from azure.storage.blob import BlobClient
+from azure.storage.blob import BlobClient, BlobServiceClient, ContentSettings
 from PythonApi import settings
 
 blob = BlobClient.from_connection_string(conn_str=settings.CONNECT_STR, container_name="media", blob_name="output")
+blob_service_client =  BlobServiceClient.from_connection_string(settings.CONNECT_STR)
+blob_client = blob_service_client.get_blob_client(container='media',
+                                                          blob='output')
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
     image = cv2.imread(gifImagePath, -1)
@@ -55,10 +58,11 @@ def ConvertVideoToJpgFramesAndSave(path):
     #     sg.popup("Error occurred creating output folder")
     #     return
 
+    image_content_setting = ContentSettings(content_type='image/jpeg')
     while still_reading:
-        blob.upload_blob(f"output/frame_{frame_count:05d}.jpg", image)
+        # blob.upload_blob(f"output/frame_{frame_count:05d}.jpg", image)
         # cv2.imwrite(f"output/frame_{frame_count:05d}.jpg", image)
-
+        blob_client.upload_blob(image,overwrite=True,content_settings=image_content_setting)
         # read next image
         still_reading, image = video_capture.read()
         frame_count += 1
