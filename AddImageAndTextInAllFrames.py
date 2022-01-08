@@ -5,7 +5,7 @@ import os, sys
 import shutil
 from PIL import Image
 from azure.storage.blob import BlobClient
-from PythonApi.PythonApi import settings
+from PythonApi import settings
 
 blob = BlobClient.from_connection_string(conn_str=settings.CONNECT_STR, container_name="media", blob_name="output")
 
