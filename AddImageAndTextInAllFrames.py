@@ -47,7 +47,7 @@ def ConvertVideoToJpgFramesAndSave(path):
     still_reading, image = video_capture.read()
     frame_count = 0
 
-    image[image != np.array(None)]
+#     image[image != np.array(None)]
     imageFrame = Image.fromarray(image)
 
     if blob.exists():
