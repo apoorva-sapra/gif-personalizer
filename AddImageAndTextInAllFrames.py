@@ -65,15 +65,19 @@ def ConvertVideoToJpgFramesAndSave(path):
     # image_content_setting = ContentSettings(content_type='')
     while still_reading:
         # blob.upload_blob(f"output/frame_{frame_count:05d}.jpg", image)
-        # image_stream = BytesIO()
+        image_stream = BytesIO()
 
-        # cv2.imwrite(image_stream, image)
+        cv2.imwrite(image_stream, image)
+        blob_name=f"output/frame_{frame_count:05d}.jpg"
+        blob_client = blob_service_client.get_blob_client(container='media', blob=blob_name)
+        blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
 
-        content_settings=ContentSettings(content_type=Image.MIME)
-        blob_client = blob_service_client.get_blob_client(container='media', blob=f"output/frame_{frame_count:05d}.jpg")
-        blob_client.get_blob_properties
-        with open(imageFrame) as data:
-                blob_client.upload_blob(data, blob_type="BlockBlob", ContentSettings=content_settings)
+
+        # content_settings=ContentSettings(content_type=Image.MIME)
+        # blob_client = blob_service_client.get_blob_client(container='media', blob=f"output/frame_{frame_count:05d}.jpg")
+        # blob_client.get_blob_properties
+        # with open(imageFrame) as data:
+        #         blob_client.upload_blob(data, blob_type="BlockBlob", ContentSettings=content_settings)
 
         # filename=ds.save(video.name,image)
         # fileurl=ds.open(filename)
