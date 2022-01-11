@@ -4,6 +4,12 @@ import glob
 import os, sys
 import shutil
 from PIL import Image
+import imageio
+from django.core.files.storage import default_storage as ds
+from azure.storage.blob import BlobClient, BlobServiceClient, ContentSettings
+from PythonApi import settings
+
+blob_service_client =  BlobServiceClient.from_connection_string(settings.CONNECT_STR)
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
     image = cv2.imread(gifImagePath, -1)
@@ -55,19 +61,21 @@ def ConvertVideoToJpgFrames(path):
         frame_count += 1
 
 
-def make_gif(gif_path, reciever_name, frame_folder="output"):
+def make_gif(reciever_name, frame_folder="output"):
     images = glob.glob(f"{frame_folder}/*.jpg")
     images.sort()
     for image in images:
         AddGraphicAfterObjectDetection(image,reciever_name)
-    frames = [Image.open(image) for image in images]
-    frame_one = frames[0]
-    # gif_path += ".gif"
-    frame_one.save(gif_path,
-                   append_images=frames,
-                   save_all=True,
-                   duration=50,
-                   loop=0)
+
+    frames = []
+    for file_name in sorted(os.listdir(frame_folder)):
+        file_path = os.path.join(frame_folder, file_name)
+        frames.append(imageio.imread(file_path))
+    imageio.mimsave('temp.gif', frames)
+
+    blob_client = blob_service_client.get_blob_client(container='media', blob='temp.gif')
+    with open('temp.gif', "rb") as data:
+        blob_client.upload_blob(data, blob_type="BlockBlob")
 
 
 def main():
@@ -79,7 +87,7 @@ def main():
     gif_name="temp.gif"
     gif_save_path = video_fullpath.replace(video_name, gif_name)
     ConvertVideoToJpgFrames(video_fullpath)
-    make_gif(gif_save_path,reciever_name)
+    make_gif(reciever_name)
     return gif_save_path
 
 
