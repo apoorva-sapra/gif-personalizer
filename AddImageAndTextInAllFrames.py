@@ -73,9 +73,11 @@ def make_gif(reciever_name, frame_folder="output"):
         frames.append(imageio.imread(file_path))
     imageio.mimsave('temp.gif', frames)
 
+    gif_content_setting = ContentSettings(content_type='image/gif')
+
     blob_client = blob_service_client.get_blob_client(container='media', blob='temp.gif')
     with open('temp.gif', "rb") as data:
-        blob_client.upload_blob(data, blob_type="BlockBlob")
+        blob_client.upload_blob(data, blob_type="BlockBlob", content_settings = gif_content_setting)
 
 
 def main():
