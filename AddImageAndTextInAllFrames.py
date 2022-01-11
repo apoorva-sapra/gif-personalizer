@@ -24,9 +24,8 @@ def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
             img2 = Image.open('background3.jpg')
             text_on_image = f"Hi {reciever_name}!"
             fontsize = 30
-            font = ImageFont.truetype("arial.ttf", fontsize)
             image_editable = ImageDraw.Draw(img2)
-            image_editable.text((153, 153), text_on_image, (255, 255, 255), font=font)
+            image_editable.text((153, 153), text_on_image, (255, 255, 255))
             img1.paste(
                 img2,
                 (round(center[0] - halfWidth), round(center[1] - halfHeight)))
