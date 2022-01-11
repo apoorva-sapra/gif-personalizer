@@ -77,7 +77,7 @@ def make_gif(reciever_name, frame_folder="output"):
 
     blob_client = blob_service_client.get_blob_client(container='media', blob='temp.gif')
     with open('temp.gif', "rb") as data:
-        blob_client.upload_blob(data, blob_type="BlockBlob", content_settings = gif_content_setting)
+        blob_client.upload_blob(data, blob_type = "BlockBlob", overwrite = True, content_settings = gif_content_setting)
 
 
 def main():
