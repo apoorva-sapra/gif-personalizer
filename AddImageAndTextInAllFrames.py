@@ -1,16 +1,11 @@
-from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
+from PySimpleGUI.PySimpleGUI import Multiline
 import cv2
 import glob
-import numpy as np
 import os, sys
 import shutil
+import PySimpleGUI as sg
 from PIL import Image
-from azure.storage.blob import BlobClient, BlobServiceClient, ContentSettings
-from PythonApi import settings
-
-blob = BlobClient.from_connection_string(conn_str=settings.CONNECT_STR, container_name="media", blob_name="output")
-blob_service_client =  BlobServiceClient.from_connection_string(settings.CONNECT_STR)
 
 def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
     image = cv2.imread(gifImagePath, -1)
@@ -42,65 +37,40 @@ def AddGraphicAfterObjectDetection(gifImagePath,reciever_name):
 file_types = [("MP4 (*.mp4)", "*.mp4"), ("All files (*.*)", "*.*")]
 
 
-def ConvertVideoToJpgFramesAndSave(path):
+def ConvertVideoToJpgFrames(path):
     video_capture = cv2.VideoCapture(path)
     still_reading, image = video_capture.read()
     frame_count = 0
-
-#     image[image != np.array(None)]
-    imageFrame = Image.fromarray(image)
-
-    if blob.exists():
+    if os.path.exists("output"):
         # remove previous GIF frame files
-        # blob.delete_blob("media","output",snapshot=None)
-        # blob.delete_blob()
-        # shutil.rmtree("output")
-        pass
-    # try:
-    #     os.mkdir("output")
-    # except IOError:
-    #     sg.popup("Error occurred creating output folder")
-    #     return
+        shutil.rmtree("output")
+    try:
+        os.mkdir("output")
+    except IOError:
+        sg.popup("Error occurred creating output folder")
+        return
 
-    # image_content_setting = ContentSettings(content_type='')
     while still_reading:
-        # image_stream = BytesIO()
+        cv2.imwrite(f"output/frame_{frame_count:05d}.jpg", image)
 
-        # cv2.imwrite(image_stream, image)
-        # blob_name=f"output/frame_{frame_count:05d}.jpg"
-        # blob_client = blob_service_client.get_blob_client(container='media', blob=blob_name)
-        # blob_client.upload_blob(image_stream.read(), blob_type="BlockBlob")
-
-
-        content_settings=ContentSettings(content_type=Image.MIME)
-        blob_client = blob_service_client.get_blob_client(container='media', blob=f"output/frame_{frame_count:05d}.jpg")
-        blob_client.get_blob_properties
-        data = Image.open(imageFrame)
-        blob_client.upload_blob(data, blob_type="BlockBlob", ContentSettings=content_settings)
-
-        # filename=ds.save(video.name,image)
-        # fileurl=ds.open(filename)
-        # templateurl=ds.url(filename)
-
-        # blob_client.upload_blob(image,overwrite=True,content_settings=image_content_setting)
         # read next image
         still_reading, image = video_capture.read()
         frame_count += 1
 
 
-# def make_gif(gif_path, reciever_name, frame_folder="output"):
-#     images = glob.glob(f"{frame_folder}/*.jpg")
-#     images.sort()
-#     for image in images:
-#         AddGraphicAfterObjectDetection(image,reciever_name)
-#     frames = [Image.open(image) for image in images]
-#     frame_one = frames[0]
-#     # gif_path += ".gif"
-#     frame_one.save(gif_path,
-#                    append_images=frames,
-#                    save_all=True,
-#                    duration=50,
-#                    loop=0)
+def make_gif(gif_path, reciever_name, frame_folder="output"):
+    images = glob.glob(f"{frame_folder}/*.jpg")
+    images.sort()
+    for image in images:
+        AddGraphicAfterObjectDetection(image,reciever_name)
+    frames = [Image.open(image) for image in images]
+    frame_one = frames[0]
+    # gif_path += ".gif"
+    frame_one.save(gif_path,
+                   append_images=frames,
+                   save_all=True,
+                   duration=50,
+                   loop=0)
 
 
 def main():
@@ -111,8 +81,8 @@ def main():
     # print("img-------->",img)
     gif_name="temp.gif"
     gif_save_path = video_fullpath.replace(video_name, gif_name)
-    ConvertVideoToJpgFramesAndSave(video_fullpath)
-    # make_gif(gif_save_path,reciever_name)
+    ConvertVideoToJpgFrames(video_fullpath)
+    make_gif(gif_save_path,reciever_name)
     return gif_save_path
 
 
