@@ -1,3 +1,4 @@
+from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 import cv2
 import glob
@@ -72,7 +73,10 @@ def make_gif(reciever_name, frame_folder="output"):
     for file_name in sorted(os.listdir(frame_folder)):
         file_path = os.path.join(frame_folder, file_name)
         frames.append(imageio.imread(file_path))
-    imageio.mimsave("temp.gif", frames)
+    temp = BytesIO()
+    temp.name = "temp.gif"
+    imageio.mimwrite(temp, frames, "gif", duration=0.02)
+    temp.seek(0)
 
     gif_content_setting = ContentSettings(content_type='image/gif')
 
