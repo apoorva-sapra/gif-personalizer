@@ -73,9 +73,10 @@ def make_gif(reciever_name, frame_folder="output"):
     for file_name in sorted(os.listdir(frame_folder)):
         file_path = os.path.join(frame_folder, file_name)
         frames.append(imageio.imread(file_path))
-    temp = "temp.gif"
-    imageio.mimsave(temp, frames, "gif")
-    temp.seek(0)
+    gif = BytesIO()
+    gif.name = "temp.gif"
+    imageio.mimsave(gif.name, frames, "gif")
+    gif.seek(0)
 
     gif_content_setting = ContentSettings(content_type='image/gif')
 
