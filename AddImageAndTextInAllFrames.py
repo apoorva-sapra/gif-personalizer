@@ -68,7 +68,6 @@ def make_gif(reciever_name, frame_folder="output"):
     for image in images:
         AddGraphicAfterObjectDetection(image,reciever_name)
     if os.path.exists("temp.gif"):
-        print("---------------------exists temp.gif")
         os.remove("temp.gif")
     frames = []
     for file_name in sorted(os.listdir(frame_folder)):
