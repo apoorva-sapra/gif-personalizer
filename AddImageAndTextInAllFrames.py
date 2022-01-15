@@ -67,12 +67,16 @@ def make_gif(reciever_name, frame_folder="output"):
     images.sort()
     for image in images:
         AddGraphicAfterObjectDetection(image,reciever_name)
-    frames = [Image.open(image) for image in images]
-    frame_one = frames[0]
-    # gif_path += ".gif"
-    frame_one.save("temp.gif",
-                   append_images=frames,
-                   save_all=True)
+    if os.path.exists("temp.gif"):
+        print("---------------------exists temp.gif")
+        os.remove("temp.gif")
+    frames = []
+    for file_name in sorted(os.listdir(frame_folder)):
+        file_path = os.path.join(frame_folder, file_name)
+        frames.append(imageio.imread(file_path))
+    temp = "temp.gif"
+    imageio.mimsave(temp, frames, "gif")
+    temp.seek(0)
 
     gif_content_setting = ContentSettings(content_type='image/gif')
 
