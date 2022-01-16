@@ -4,12 +4,15 @@ import sys
 from subprocess import run,PIPE
 from django.core.files.storage import default_storage as ds
 from django.views.generic import TemplateView
+from django.template import RequestContext
 
 class Home(TemplateView):
     template_name = 'home.html'
 
+
 def button(request):
     return render(request,'home.html')
+
 
 def external(request):
     name= request.POST.get('param')
@@ -17,9 +20,6 @@ def external(request):
     filename=ds.save(video.name,video)
     fileurl=ds.open(filename)
     templateurl=ds.url(filename)
-
-    print("video saved")
-    print("fileurl",fileurl)
     
     #changing \\ to / for correct path route on azure
     GIF_CREATOR_FILE="/AddImageAndTextInAllFrames.py"
@@ -43,4 +43,5 @@ def external(request):
     gif_name=os.path.basename(gif.stdout)
     gif_url=ds.url(gif_name)
     # print("\n gif url => ", gif_url)
-    return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url})
+    return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url},context_instance=RequestContext(request))
+    
