@@ -43,24 +43,31 @@
       </div>
     </div>
 
-    <button class=" btn" onclick="setItemBody(edit_url)">Insert Gif</button>
+    <button class=" btn" onclick="setItemBody()">Insert Gif</button>
 
     <script>
-      function setItemBody(url) {
-        item = Office.context.mailbox.item;
-        item.body.setSelectedDataAsync(
-              '<img src="' + url + '" style="height: 200px;"></img>',
-              { coercionType: Office.CoercionType.Html,
-              asyncContext: { var3: 1, var4: 2 } },
-              function (asyncResult) {
-                if (asyncResult.status ===
-                  Office.AsyncResultStatus.Failed) {
-                  console.error(asyncResult.error.message);
-                } else {
-                  console.log("image added to mail body")
-                  // Successfully set data in item body.
-                }
-              });
+      function setItemBody() {
+      url = "https://gifpersonalizerstorage.blob.core.windows.net/media/temp.gif"
+      Office.onReady(function(info) {
+      if (info.host === Office.HostType.Outlook) {
+          item = Office.context.mailbox.item;
+          item.body.setSelectedDataAsync(
+            '<img src="' + url + '" style="height: 200px;"></img>',
+            {
+              coercionType: Office.CoercionType.Html,
+              asyncContext: { var3: 1, var4: 2 }
+            },
+            function (asyncResult) {
+              if (asyncResult.status ===
+                Office.AsyncResultStatus.Failed) {
+                console.error(asyncResult.error.message);
+              } else {
+                console.log("image added to mail body")
+                // Successfully set data in item body.
+              }
+            });
+          }
+        });
       }
     </script>
 {% endif %}
