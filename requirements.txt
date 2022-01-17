@@ -8,6 +8,7 @@ Django==3.2.9
 django-extensions==3.1.5
 django-crispy-forms
 django-storages==1.12.3
+django-cors-headers
 imageai==2.1.5
 imageio==2.9.0
 imageio-ffmpeg==0.4.5

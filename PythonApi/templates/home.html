@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <!-- <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -12,7 +11,7 @@
 
 <div class="card col-12 row justify-content-center frame">
   <div class="card-body col-10">
-      <h1 class="title">Personalize your GIF</h1>
+    <h1 class="title">Personalize your GIF</h1>
 
     <div class="card">
       <form action="/external/" method="post" enctype="multipart/form-data">
@@ -34,16 +33,53 @@
     </div>
   </div>
 
-
   {% if raw_url or edit_url %}
-  <div class="card-body col-9">
-    Your Personalised GIF is ready!:
-    <p><a class="btn" style="color:black;" href="{{ edit_url }}">Preview</a></p>
-    <div class="img">
-      <img src={{edit_url}} height=100 width=100>
+    <div class="card-body col-9">
+      Your Personalised GIF is ready!:
+      <p><a class="btn" style="color:black;" rel="{{ edit_url }}"> {% csrf_token %} Preview</a></p>
+      <div class="img">
+        {% csrf_token %}
+        <img src={{edit_url}} height=100 width=100>
+      </div>
     </div>
-  </div>
-  {% endif %}
-</div>
 
+    <button class=" btn" onclick="myFunction()">Insert Gif</button>
+
+    <p id="demo"></p>
+
+    <script>
+      function myFunction() {
+        document.getElementById("demo").innerHTML = "Hello World";
+
+        var imageBase64Data = 'data:image/gif';//truncated the actual base64 data as its too  long
+        $.ajax({
+          type: 'post',
+          url: 'https://gifpersonalizerstorage.blob.core.windows.net/media/temp.gif',
+          data: {
+            image: imageBase64Data
+          },
+          error: function (e) {
+            console.error(e);
+          },
+          success: function (response) {
+            console.log(response);
+            var imageHTML = "<img " +
+              "src='" + response + "' img/>";
+            console.log(imageHTML);
+
+            //Add an image as a link
+            Office.cast.item.toItemCompose(Office.context.mailbox.item).body.setSelectedDataAsync(imageHTML, {
+              coercionType: Office.CoercionType.Html,
+            },
+              function (asyncResult) {
+                if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+                  app.showNotification("Action failed with error: " + asyncResult.error.message);
+                }
+              });
+          }
+        });
+      }
+    </script>
+{% endif %}
+</div>
 {% endblock %}
