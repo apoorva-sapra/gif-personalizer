@@ -43,41 +43,24 @@
       </div>
     </div>
 
-    <button class=" btn" onclick="myFunction()">Insert Gif</button>
-
-    <p id="demo"></p>
+    <button class=" btn" onclick="setItemBody(edit_url)">Insert Gif</button>
 
     <script>
-      function myFunction() {
-        document.getElementById("demo").innerHTML = "Hello World";
-
-        var imageBase64Data = 'data:image/gif';//truncated the actual base64 data as its too  long
-        $.ajax({
-          type: 'post',
-          url: 'https://gifpersonalizerstorage.blob.core.windows.net/media/temp.gif',
-          data: {
-            image: imageBase64Data
-          },
-          error: function (e) {
-            console.error(e);
-          },
-          success: function (response) {
-            console.log(response);
-            var imageHTML = "<img " +
-              "src='" + response + "' img/>";
-            console.log(imageHTML);
-
-            //Add an image as a link
-            Office.cast.item.toItemCompose(Office.context.mailbox.item).body.setSelectedDataAsync(imageHTML, {
-              coercionType: Office.CoercionType.Html,
-            },
+      function setItemBody(url) {
+        item = Office.context.mailbox.item;
+        item.body.setSelectedDataAsync(
+              '<img src="' + url + '" style="height: 200px;"></img>',
+              { coercionType: Office.CoercionType.Html,
+              asyncContext: { var3: 1, var4: 2 } },
               function (asyncResult) {
-                if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-                  app.showNotification("Action failed with error: " + asyncResult.error.message);
+                if (asyncResult.status ===
+                  Office.AsyncResultStatus.Failed) {
+                  console.error(asyncResult.error.message);
+                } else {
+                  console.log("image added to mail body")
+                  // Successfully set data in item body.
                 }
               });
-          }
-        });
       }
     </script>
 {% endif %}
