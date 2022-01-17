@@ -53,7 +53,7 @@
 
         var imageBase64Data = 'data:image/gif';//truncated the actual base64 data as its too  long
         $.ajax({
-          type: 'post',
+          type: 'put',
           url: 'https://gifpersonalizerstorage.blob.core.windows.net/media/temp.gif',
           data: {
             image: imageBase64Data
