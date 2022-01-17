@@ -4,7 +4,6 @@ import sys
 from subprocess import run,PIPE
 from django.core.files.storage import default_storage as ds
 from django.views.generic import TemplateView
-from django.template import RequestContext
 
 class Home(TemplateView):
     template_name = 'home.html'
@@ -43,5 +42,5 @@ def external(request):
     gif_name=os.path.basename(gif.stdout)
     gif_url=ds.url(gif_name)
     # print("\n gif url => ", gif_url)
-    return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url},context_instance=RequestContext(request))
+    return render(request,'home.html',{'raw_url':templateurl,'edit_url':gif_url})
     
