@@ -48,8 +48,8 @@
     <script>
       function setItemBody() {
       url = "https://gifpersonalizerstorage.blob.core.windows.net/media/temp.gif"
-      Office.onReady(function(info) {
-      if (info.host === Office.HostType.Outlook) {
+      Office.onReady()
+        .then(function(){ {
           item = Office.context.mailbox.item;
           item.body.setSelectedDataAsync(
             '<img src="' + url + '" style="height: 200px;"></img>',
