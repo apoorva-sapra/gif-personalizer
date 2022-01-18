@@ -52,7 +52,7 @@
         .then(function(){ {
           item = Office.context.mailbox.item;
           item.body.setSelectedDataAsync(
-            '<img src="' + url + '" style="height: 200px;"></img>',
+            '<img src="' + url + '" style="width:128px;height:128px;"></img>',
             {
               coercionType: Office.CoercionType.Html,
               asyncContext: { var3: 1, var4: 2 }
